@@ -1,0 +1,14 @@
+This is for cakephp 2.0
+
+Changes from original phpThumb v1.7.11
+
+Remove dirname(@$_SERVER['PHP_SELF']) in phpthumb.class.php in line 1038
+
+reason is because in cakephp 1.3
+dirname(@$_SERVER['PHP_SELF']) returns /
+in cakephp 2.0
+dirname(@$_SERVER['PHP_SELF']) returns /index.php/webroot/path/to/image/uploads
+
+example, /index.php/uploads/products
+
+which causes problems when used with MeioUpload in terms of producing the thumbnails
