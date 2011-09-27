@@ -138,8 +138,8 @@ class phpthumb {
 	// * Security
 	var $config_high_security_enabled                = false;
 	var $config_high_security_password               = null;
-	var $config_disable_debug                        = true;
-	var $config_allow_src_above_docroot              = false;
+	var $config_disable_debug                        = true; // for debug turn this to false.
+	var $config_allow_src_above_docroot              = false;// may need to turn this to true for capistrano reasons
 	var $config_allow_src_above_phpthumb             = true;
 
 	// * HTTP fopen
@@ -1069,7 +1069,10 @@ class phpthumb {
 
 			// relative to current directory (any OS)
 			//$AbsoluteFilename = $this->config_document_root.preg_replace('#[/\\\\]#', DIRECTORY_SEPARATOR, dirname(@$_SERVER['PHP_SELF'])).DIRECTORY_SEPARATOR.preg_replace('#[/\\\\]#', DIRECTORY_SEPARATOR, $filename);
-			$AbsoluteFilename = dirname(__FILE__).DIRECTORY_SEPARATOR.preg_replace('#[/\\\\]#', DIRECTORY_SEPARATOR, $filename);
+			//$AbsoluteFilename = dirname(__FILE__).DIRECTORY_SEPARATOR.preg_replace('#[/\\\\]#', DIRECTORY_SEPARATOR, $filename);
+			
+			// because we are using phpThumb as a Vendor in cakephp 2.0
+			$AbsoluteFilename = $this->config_document_root.DIRECTORY_SEPARATOR.$filename;
 
 			//if (!@file_exists($AbsoluteFilename) && @file_exists(realpath($this->DotPadRelativeDirectoryPath($filename)))) {
 			//	$AbsoluteFilename = realpath($this->DotPadRelativeDirectoryPath($filename));
