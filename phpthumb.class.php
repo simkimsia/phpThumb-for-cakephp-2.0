@@ -207,6 +207,9 @@ class phpthumb {
 	var $issafemode = null;
 
 	var $phpthumb_version = '1.7.11-201108081537';
+	
+	// for cakephp usage
+	var $useCake = true; // we choose this as true if we want to customize phpthumb for cakephp usage
 
 	//////////////////////////////////////////////////////////////////////
 
@@ -1069,10 +1072,16 @@ class phpthumb {
 
 			// relative to current directory (any OS)
 			//$AbsoluteFilename = $this->config_document_root.preg_replace('#[/\\\\]#', DIRECTORY_SEPARATOR, dirname(@$_SERVER['PHP_SELF'])).DIRECTORY_SEPARATOR.preg_replace('#[/\\\\]#', DIRECTORY_SEPARATOR, $filename);
-			//$AbsoluteFilename = dirname(__FILE__).DIRECTORY_SEPARATOR.preg_replace('#[/\\\\]#', DIRECTORY_SEPARATOR, $filename);
+			$AbsoluteFilename = dirname(__FILE__).DIRECTORY_SEPARATOR.preg_replace('#[/\\\\]#', DIRECTORY_SEPARATOR, $filename);
 			
 			// because we are using phpThumb as a Vendor in cakephp 2.0
-			$AbsoluteFilename = $this->config_document_root.DIRECTORY_SEPARATOR.$filename;
+			if ($this->useCake) {
+				if ($this->config_document_root != null) {
+					$AbsoluteFilename = $this->config_document_root.DIRECTORY_SEPARATOR.$filename;
+				} else {
+					$AbsoluteFilename = WWW_ROOT.DIRECTORY_SEPARATOR.$filename;
+				}
+			}
 
 			//if (!@file_exists($AbsoluteFilename) && @file_exists(realpath($this->DotPadRelativeDirectoryPath($filename)))) {
 			//	$AbsoluteFilename = realpath($this->DotPadRelativeDirectoryPath($filename));
